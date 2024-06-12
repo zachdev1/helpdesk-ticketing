@@ -1,6 +1,6 @@
-import './dashboard.css';
+import './Dashboard.css';
 
-function dashboard() {
+function Dashboard() {
     return (
         <div className='dashboard'>
             <table>
@@ -22,4 +22,4 @@ function dashboard() {
     );
 }
 
-export default dashboard;
+export default Dashboard;
