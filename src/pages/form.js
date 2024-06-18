@@ -4,21 +4,23 @@ import './Form.css';
 const Form = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
   const [department, setDepartment] = useState('');
   const [computerId, setComputerId] = useState('');
   const [fileName, setFileName] = useState('');
   const [problemDescription, setProblemDescription] = useState('');
+  const [tickets, setTickets] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupContent, setPopupContent] = useState({ description: '', file: '' });
+  const [image, setImage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = { firstName, lastName, email, department, computerId, fileName, problemDescription };
-    console.log(form);
+    const newTicket = { firstName, lastName, department, computerId, fileName, problemDescription };
+    setTickets([...tickets, newTicket]);
 
     // clear form
     setFirstName('');
     setLastName('');
-    setEmail('');
     setDepartment('');
     setDepartment('');
     setComputerId('');
@@ -26,26 +28,45 @@ const Form = () => {
     setProblemDescription('');
   };
 
-  
+  const handleRemoveTicket = (index) => {
+    setTickets(tickets.filter((_, i) => i !== index));
+  };
+
+  const handleDetailsClick = (ticket) => {
+    setPopupContent({ description: ticket.problemDescription, file: ticket.image });
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setPopupContent({ description: '', file: '' });
+  };
+
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setFileName(event.target.files[0].name);
+      setImage(URL.createObjectURL(event.target.files[0]));
+    }
+   }
+
   return(
     <div className="form">
-    <h1>IT Service Ticket</h1>
-    <h4>Please provide the details of the problem</h4>
+    <div className='header'>
+      <h1>IT Service Ticket</h1>
+      <h4>Please provide the details of the problem</h4>
+    </div>
       
       <form onSubmit={handleSubmit}>
         <label for="name">Name</label><br></br>
         
-        <label for="first-name">First Name</label>
+        <label for="first-name" className='required'>First Name</label>
         <input required type='text' id='first-name' name='first-name' value={firstName} onChange={(e) => setFirstName(e.target.value)}></input>
 
-        <label for="last-name">Last Name</label>
+        <label for="last-name" className='required'>Last Name</label>
         <input required type='text' id='last-name' name='last-name' value={lastName} onChange={(e) => setLastName(e.target.value)}></input><br></br>
-
-        <label for="email">E-mail</label>
-        <input required type='email' id='email' name='email' placeholder='myname@example.com' value={email} onChange={(e) => setEmail(e.target.value)}></input><br></br>
-        
-        <label for="department">Department</label>
-        <select id="department" name="department" value={department} onChange={(e) => setDepartment(e.target.value)}>
+  
+        <label for="department" className='required'>Department</label>
+        <select required id="department" name="department" value={department} onChange={(e) => setDepartment(e.target.value)}>
           <option value="Human Resources">Human Resources</option>
           <option value="Accounting">Accounting</option>
           <option value="Marketing">Marketing</option>
@@ -54,20 +75,62 @@ const Form = () => {
           <option value="Legal">Legal</option>
         </select><br></br>
 
-        <label for="computerId">Computer ID</label>
+        <label for="computerId" className='required'>Computer ID</label>
         <input required type='text' inputMode='numeric' id='computerId' name='computerId' placeholder='xxxxxx' maxLength="6" size='4' value={computerId} onChange={(e) => setComputerId(e.target.value)}></input>
         <br></br>
 
         <label for="fileName">Upload a file:</label>
-        <input type="file" id="fileName" name="fileName" accept="image/*,.pdf" value={fileName} onChange={(e) => setFileName(e.target.value)}></input>
+        <input type="file" id="file-btn" name="fileName" accept="image/*" value={fileName} onChange={(e) => setFileName(e.target.fileName)}></input>
         <br></br>
 
-        <label for="problemDescription">Describe the Problem</label><br></br>
+        <label for="problemDescription" className='required'>Describe the Problem</label><br></br>
         <textarea id="problemDescription" name='problemDescription' rows='10' cols='40' value={problemDescription} onChange={(e) => setProblemDescription(e.target.value)}></textarea>
         <br></br>
 
         <input required type='submit' id='submit-btn' value="Submit"></input>
       </form>
+
+      <div className='dashboard'>
+        <table>
+          <caption>Tickets Dashboard</caption>
+          <thead>
+            <tr>
+              <th>Ticket Number</th>
+              <th>Computer ID</th>
+              <th>Department</th>
+              <th>Reported By</th>
+              <th>Details</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tickets.map((ticket, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{ticket.computerId}</td>
+                <td>{ticket.department}</td>
+                <td>{`${ticket.firstName} ${ticket.lastName}`}</td>
+                <td>
+                  <button type='button' onClick={() => handleDetailsClick(ticket)}>Details</button>
+                </td>
+                <td>
+                  <button type='button' id='cancelTicket' onClick={ () => handleRemoveTicket(index)}>X</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <h2>Problem Details</h2>
+            <p>{popupContent.description}</p>
+            {popupContent.image && <img src={popupContent.image} alt="Uploaded file" />}
+            <button type="button" onClick={closePopup}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
