@@ -6,16 +6,15 @@ const Form = () => {
   const [lastName, setLastName] = useState('');
   const [department, setDepartment] = useState('');
   const [computerId, setComputerId] = useState('');
-  const [fileName, setFileName] = useState('');
   const [problemDescription, setProblemDescription] = useState('');
   const [tickets, setTickets] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [popupContent, setPopupContent] = useState({ description: '', file: '' });
+  const [popupContent, setPopupContent] = useState({ description: '', image: '' });
   const [image, setImage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newTicket = { firstName, lastName, department, computerId, fileName, problemDescription };
+    const newTicket = { firstName, lastName, department, computerId, problemDescription, image };
     setTickets([...tickets, newTicket]);
 
     // clear form
@@ -24,8 +23,8 @@ const Form = () => {
     setDepartment('');
     setDepartment('');
     setComputerId('');
-    setFileName('');
     setProblemDescription('');
+    setImage('');
   };
 
   const handleRemoveTicket = (index) => {
@@ -33,18 +32,17 @@ const Form = () => {
   };
 
   const handleDetailsClick = (ticket) => {
-    setPopupContent({ description: ticket.problemDescription, file: ticket.image });
+    setPopupContent({ description: ticket.problemDescription, image: ticket.image });
     setShowPopup(true);
   };
 
   const closePopup = () => {
     setShowPopup(false);
-    setPopupContent({ description: '', file: '' });
+    setPopupContent({ description: '', image: '' });
   };
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      setFileName(event.target.files[0].name);
       setImage(URL.createObjectURL(event.target.files[0]));
     }
    }
@@ -67,6 +65,7 @@ const Form = () => {
   
         <label for="department" className='required'>Department</label>
         <select required id="department" name="department" value={department} onChange={(e) => setDepartment(e.target.value)}>
+          <option value='' disabled>Select Department</option>
           <option value="Human Resources">Human Resources</option>
           <option value="Accounting">Accounting</option>
           <option value="Marketing">Marketing</option>
@@ -80,7 +79,7 @@ const Form = () => {
         <br></br>
 
         <label for="fileName">Upload a file:</label>
-        <input type="file" id="file-btn" name="fileName" accept="image/*" value={fileName} onChange={(e) => setFileName(e.target.fileName)}></input>
+        <input type="file" id="file-btn" name="fileName" accept="image/*" onChange={onImageChange}></input>
         <br></br>
 
         <label for="problemDescription" className='required'>Describe the Problem</label><br></br>
@@ -111,7 +110,7 @@ const Form = () => {
                 <td>{ticket.department}</td>
                 <td>{`${ticket.firstName} ${ticket.lastName}`}</td>
                 <td>
-                  <button type='button' onClick={() => handleDetailsClick(ticket)}>Details</button>
+                  <button type='button' id='handleDetails' onClick={() => handleDetailsClick(ticket)}>Details</button>
                 </td>
                 <td>
                   <button type='button' id='cancelTicket' onClick={ () => handleRemoveTicket(index)}>X</button>
@@ -126,8 +125,8 @@ const Form = () => {
           <div className="popup-content">
             <h2>Problem Details</h2>
             <p>{popupContent.description}</p>
-            {popupContent.image && <img src={popupContent.image} alt="Uploaded file" />}
-            <button type="button" onClick={closePopup}>Close</button>
+            {popupContent.image && <img src={popupContent.image} id='uploadedImg'alt="Uploaded file" />}
+            <button type="button" id='close' onClick={closePopup}>Close</button>
           </div>
         </div>
       )}

@@ -1,12 +1,19 @@
+
+body{
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+}
+
 .form{
     text-align: center;
     margin-bottom: 50px;
 }
 
 .dashboard{
+    font-family: 'Open Sans', sans-serif;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    margin-top: 50px;
     
 }
 
@@ -28,11 +35,31 @@ table {
 td, th {
     border: 1px solid;
     padding: 5px 8px;
-    
+}
+
+label{
+    font-size: 16px;
+    font-weight: bold;
 }
 
 input{
     margin: 8px;
+    font-size: 15px;
+}
+
+/* inputs */
+#computerId{
+    border: 2px solid #344b64;
+    border-radius: 10px;
+    text-align: center;
+    padding: 3px;
+}
+
+#first-name, #last-name, #department, #problemDescription{
+    border: 2px solid #344b64;
+    border-radius: 3px;
+    margin-left: 8px;
+    padding: 3px;
 }
 
 .required::after{
@@ -80,6 +107,68 @@ input::file-selector-button:hover{
     background-color: #2e3e50;
 }
 
+#handleDetails{
+    background-color: #496380;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    height: 24px;
+    letter-spacing: .25px;
+    padding: 2px 12px;
+    display: inline-block;
+    border-radius: 24px;
+    font-size: 16px;
+}
+
+#handleDetails:hover{
+    transition-duration: 300ms;
+    color: white;
+    background-color: #2e3e50;
+}
+
+#cancelTicket{
+    background-color: #df1414;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    height: 24px;
+    letter-spacing: .25px;
+    padding: 2px 12px;
+    display: inline-block;
+    border-radius: 24px;
+    font-size: 16px;
+}
+
+#cancelTicket:hover{
+    background-color: #bb1f1f;
+    transition-duration: 300ms;
+    color: white;
+}
+
+#close{
+    background-color: #496380;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    height: 24px;
+    letter-spacing: .25px;
+    padding: 2px 12px;
+    display: inline-block;
+    border-radius: 24px;
+    font-size: 16px;
+    margin-top: 20px;
+    align-self: center;
+}
+
+#close:hover{
+    transition-duration: 300ms;
+    color: white;
+    background-color: #2e3e50;
+}
+
 .popup {
   position: fixed;
   top: 0;
@@ -97,11 +186,14 @@ input::file-selector-button:hover{
   padding: 50px;
   border-radius: 5px;
   text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
-.popup-content a {
-  display: block;
-  margin-top: 10px;
-  color: blue;
-  text-decoration: underline;
+#uploadedImg{
+    display: block;
+    color: red;
+    max-width: 500px;
+    max-height: 500px;
+    margin: 0 auto 20px auto;
 }
