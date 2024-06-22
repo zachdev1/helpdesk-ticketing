@@ -1,10 +1,6 @@
 # helpdesk-ticketing
 A web app for creating and managing IT service tickets. Users can submit tickets describing their IT issues, which are displayed in a dashboard for further action.
 
-## Demo
-
-You can view a live project demo [here](#).
-
 ## Installation
 
 Follow these steps to set up the project locally:
