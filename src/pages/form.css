@@ -13,8 +13,9 @@ body{
     font-family: 'Open Sans', sans-serif;
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
-    
+    margin: 50px auto;
+    overflow: auto;
+    width: 75%;
 }
 
 .header{
@@ -28,8 +29,16 @@ h1, h4{
     margin: 0.8rem;
 }
 
-table {
+table{
     border-collapse: collapse;
+}
+
+thead{
+    background-color: #34495E;
+}
+
+th{
+    color: white;
 }
 
 td, th {

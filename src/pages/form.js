@@ -48,6 +48,13 @@ const Form = () => {
    }
 
   return(
+    /* 
+      TODO
+      modify table style
+      test names and upload screenshots to git
+      setup github pages
+      upload to resume
+    */
     <div className="form">
     <div className='header'>
       <h1>IT Service Ticket</h1>
@@ -91,7 +98,7 @@ const Form = () => {
 
       <div className='dashboard'>
         <table>
-          <caption>Tickets Dashboard</caption>
+          <caption><b>Tickets Dashboard</b></caption>
           <thead>
             <tr>
               <th>Ticket Number</th>
